@@ -1,7 +1,8 @@
-package com.example.clothdemo
+package com.example.clothdemo.Controller
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.clothdemo.R
 
 class MainActivity : AppCompatActivity() {
 
