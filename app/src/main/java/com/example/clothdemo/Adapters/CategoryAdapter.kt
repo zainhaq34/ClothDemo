@@ -10,18 +10,14 @@ import android.widget.TextView
 import com.example.clothdemo.Model.Category
 import com.example.clothdemo.R
 
-class CategoryAdapter(context: Context, categories: List<Category>) : BaseAdapter() {
-
-    // Constructor Param Initialize
-    val mContext = context
-    val mCategories = categories
+class CategoryAdapter(val mContext: Context, val mCategories: List<Category>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         // Declare View
         val categoryView : View
 
-        // Declare view Holder
+        // Declare view CategoryViewHolder
         val holder : CategoryViewHolder
 
         if (convertView == null)
@@ -32,7 +28,7 @@ class CategoryAdapter(context: Context, categories: List<Category>) : BaseAdapte
             // Bind Layout
             categoryView = LayoutInflater.from(mContext).inflate(R.layout.category_list_item, null)
 
-            // Initialize View Holder
+            // Initialize View CategoryViewHolder
             holder = CategoryViewHolder()
 
             // Bind Widgets
@@ -42,7 +38,7 @@ class CategoryAdapter(context: Context, categories: List<Category>) : BaseAdapte
             categoryView.tag =holder
         }else
         {
-            // Recycle View Holder
+            // Recycle View CategoryViewHolder
             holder = convertView.tag as CategoryViewHolder
             categoryView = convertView
             println("Recycle List")
@@ -77,7 +73,7 @@ class CategoryAdapter(context: Context, categories: List<Category>) : BaseAdapte
     }
 
     /***
-     * View Holder - CategoryViewHolder Class
+     * View CategoryViewHolder - CategoryViewHolder Class
      */
     private class CategoryViewHolder {
         var categoryName: TextView? = null
