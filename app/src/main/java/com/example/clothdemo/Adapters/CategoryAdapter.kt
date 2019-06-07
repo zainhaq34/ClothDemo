@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.clothdemo.Model.Category
 import com.example.clothdemo.R
-import kotlinx.android.synthetic.main.activity_main.*
 
 class CategoryAdapter(context: Context, categories: List<Category>) : BaseAdapter() {
 
@@ -22,23 +21,42 @@ class CategoryAdapter(context: Context, categories: List<Category>) : BaseAdapte
         // Declare View
         val categoryView : View
 
-        /***
-         *  Bind custom list item [category_list_item.xml]
-         */
-        // Bind Layout
-        categoryView = LayoutInflater.from(mContext).inflate(R.layout.category_list_item, null)
+        // Declare view Holder
+        val holder : CategoryViewHolder
 
-        // Bind Widgets
-        val categoryName : TextView = categoryView.findViewById(R.id.categoryTextView)
-        val categoryImage : ImageView = categoryView.findViewById(R.id.categoryImageView)
+        if (convertView == null)
+        {
+            /***
+             *  Bind custom list item category_list_item.xml
+             */
+            // Bind Layout
+            categoryView = LayoutInflater.from(mContext).inflate(R.layout.category_list_item, null)
+
+            // Initialize View Holder
+            holder = CategoryViewHolder()
+
+            // Bind Widgets
+            holder.categoryName = categoryView.findViewById(R.id.categoryTextView)
+            holder.categoryImage = categoryView.findViewById(R.id.categoryImageView)
+            println("I exist for the First time")
+            categoryView.tag =holder
+        }else
+        {
+            // Recycle View Holder
+            holder = convertView.tag as CategoryViewHolder
+            categoryView = convertView
+            println("Recycle List")
+        }
+
+
 
         // Initialize Categories
-        val categroy = mCategories[position]
+        val category = mCategories[position]
         // category Title
-        categoryName.text = categroy.title
+        holder.categoryName?.text = category.title
         // category image
-        val resourceId = mContext.resources.getIdentifier(categroy.image, "drawable", mContext.packageName)
-        categoryImage.setImageResource(resourceId)
+        val resourceId = mContext.resources.getIdentifier(category.image, "drawable", mContext.packageName)
+        holder.categoryImage?.setImageResource(resourceId)
 
         return categoryView
     }
@@ -56,5 +74,13 @@ class CategoryAdapter(context: Context, categories: List<Category>) : BaseAdapte
     override fun getCount(): Int {
         // Count number of rows list data in table view
         return mCategories.count()
+    }
+
+    /***
+     * View Holder - CategoryViewHolder Class
+     */
+    private class CategoryViewHolder {
+        var categoryName: TextView? = null
+        var categoryImage: ImageView? = null
     }
 }
